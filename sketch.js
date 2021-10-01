@@ -9,15 +9,13 @@ fileSelector.addEventListener('change', (event) => {
   const fileList = event.target.files;
   path="./Music/"+fileList[0].name
   // console.log(fileList[0])
-
-  // console.log("./Music/"+fileList[0].name);
+  console.log(path);
   
 });
 
 function preload() {
   //Music format admitted to be loaded and the song loaded from the system 
   soundFormats('mp3', 'ogg'); 
-  console.log(path)
   mySound = loadSound(path);
 }
 
