@@ -3,10 +3,22 @@ let amp;
 let fft;
 let path;
 
+
+const fileSelector = document.getElementById('file_selector');
+fileSelector.addEventListener('change', (event) => {
+  const fileList = event.target.files;
+  path="./Music/"+fileList[0].name
+  // console.log(fileList[0])
+
+  // console.log("./Music/"+fileList[0].name);
+  
+});
+
 function preload() {
   //Music format admitted to be loaded and the song loaded from the system 
   soundFormats('mp3', 'ogg'); 
-  mySound = loadSound('musicDB/Podington Bear - Starling.mp3');
+  console.log(path)
+  mySound = loadSound(path);
 }
 
 function setup() {
@@ -93,3 +105,34 @@ function mouseReleased() {
   mySound.pause();
   background(220);
 }
+
+// function handleFileSelect(evt) {
+//   var files = evt.target.files; // FileList object
+
+//   // files is a FileList of File objects. List some properties.
+//   var output = [];
+//   for (var i = 0, f; f = files[i]; i++) {
+//     output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+//                 f.size, ' bytes, last modified: ',
+//                 f.lastModifiedDate.toLocaleDateString(), '</li>');
+//   }
+//   document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+// }
+
+// document.getElementById('files').addEventListener('change', handleFileSelect, false);
+// const onChange = (event) => {
+//   const value = event.target.value;
+
+//   // this will return C:\fakepath\somefile.ext
+//   console.log(value);
+
+//   const files = event.target.files;
+
+//   //this will return an ARRAY of File object
+//   console.log(files);
+// }
+
+// return (
+//  <input type="file" onChange={onChange} />
+// )
+
