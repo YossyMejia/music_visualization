@@ -1,20 +1,25 @@
 let mySound;
 let amp;
 let fft;
-let path;
-
+let path = "MusicDB/Podington Bear - Starling";
+let song_name = "Podington Bear - Starling";
 
 const fileSelector = document.getElementById('file_selector');
+
 fileSelector.addEventListener('change', (event) => {
   const fileList = event.target.files;
-  path="./Music/"+fileList[0].name
-  // console.log(fileList[0])
+  path = "MusicDB/"+fileList[0].name
+  song_name = fileList[0].name
   console.log(path);
-  
 });
+
 
 function preload() {
   //Music format admitted to be loaded and the song loaded from the system 
+  var button =  createButton("Cargar cancion");
+  button.mousePressed(preload)
+  button.size(200,50);
+  button.style("margin-top","50px");
   soundFormats('mp3', 'ogg'); 
   mySound = loadSound(path);
 }
@@ -76,7 +81,8 @@ function drawSpeakers(level, color){
 
 function draw() {
   background(800, 10)
-  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 25);
+  text("Nombre de la cancion: "+song_name, 25, 25);
+  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
   textSize(20)
   drawSubWoofersCase();
   drawSpeakerCase();
@@ -103,34 +109,3 @@ function mouseReleased() {
   mySound.pause();
   background(220);
 }
-
-// function handleFileSelect(evt) {
-//   var files = evt.target.files; // FileList object
-
-//   // files is a FileList of File objects. List some properties.
-//   var output = [];
-//   for (var i = 0, f; f = files[i]; i++) {
-//     output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-//                 f.size, ' bytes, last modified: ',
-//                 f.lastModifiedDate.toLocaleDateString(), '</li>');
-//   }
-//   document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-// }
-
-// document.getElementById('files').addEventListener('change', handleFileSelect, false);
-// const onChange = (event) => {
-//   const value = event.target.value;
-
-//   // this will return C:\fakepath\somefile.ext
-//   console.log(value);
-
-//   const files = event.target.files;
-
-//   //this will return an ARRAY of File object
-//   console.log(files);
-// }
-
-// return (
-//  <input type="file" onChange={onChange} />
-// )
-
