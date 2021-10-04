@@ -5,6 +5,7 @@ let fft;
 let path = "MusicDB/Podington Bear - Starling";
 let song_name = "Podington Bear - Starling";
 var particles = []
+var button_created = false;
 
 const fileSelector = document.getElementById('file_selector');
 
@@ -18,10 +19,13 @@ fileSelector.addEventListener('change', (event) => {
 
 function preload() {
   //Music format admitted to be loaded and the song loaded from the system 
-  var button =  createButton("Cargar cancion");
-  button.mousePressed(preload)
-  button.size(200,50);
-  button.style("margin-top","50px");
+  if(button_created === false){
+    button_created = true;
+    var button =  createButton("Cargar cancion");
+    button.mousePressed(preload);
+    button.size(200,50);
+    button.style("margin-top","50px");
+  }
   soundFormats('mp3', 'ogg'); 
   mySound = loadSound(path);
 }
@@ -97,6 +101,21 @@ function draw() {
   strokeWeight(1)
   noFill()
 
+   
+
+  drawSubWoofersCase();
+  drawSpeakerCase();
+  drawSubWoofers(0.2, 80);
+  drawSpeakers(0.2, 80);
+
+  let level = amp.getLevel();
+  if(level > 0.3){
+    drawSubWoofers(level/2, 125);
+  }
+  else if(level <=  0.3){
+    drawSpeakers(level/1.2, 125);
+  }
+
   // Nueva funcionalidad
   // translate(width/2, height/2)
 
@@ -129,23 +148,7 @@ function draw() {
   }
 
   // Nueva funcionalidad
-  
-
-  drawSubWoofersCase();
-  drawSpeakerCase();
-  drawSubWoofers(0.2, 80);
-  drawSpeakers(0.2, 80);
-
-  let level = amp.getLevel();
-  if(level > 0.3){
-    drawSubWoofers(level/2, 125);
-  }
-  else if(level <=  0.3){
-    drawSpeakers(level/1.2, 125);
-  }
-
-  
-
+ 
   // requestAnimationFrame(draw);
 
   // if (running) {
