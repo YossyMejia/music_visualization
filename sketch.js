@@ -6,6 +6,7 @@ let path = "MusicDB/Podington Bear - Starling";
 let song_name = "Podington Bear - Starling";
 var particles = []
 var button_created = false;
+var img;
 
 const fileSelector = document.getElementById('file_selector');
 
@@ -28,14 +29,18 @@ function preload() {
   }
   soundFormats('mp3', 'ogg'); 
   mySound = loadSound(path);
+  img = loadImage("img.jpeg")
 }
 
 function setup() {
   let cnv = createCanvas(windowWidth, windowHeight);
   cnv.mousePressed(canvasPressed);
   angleMode(DEGREES)
+  imageMode(CENTER);
   amp = new p5.Amplitude();
-  fft = new p5.FFT();
+  fft = new p5.FFT(0.3);
+
+  img.filter(BLUR, 1)
 }
 
 function drawSubWoofersCase() {
@@ -85,20 +90,13 @@ function drawSpeakers(level, color){
   circle(width/1.9, height/1.225, size/2.5, size);
 }
 
-function circle(){
-  
-}
-
 
 
 function draw() {
-  background(800, 10)
-  text("Nombre de la cancion: "+song_name, 10, 15);
-  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
-  textSize(20)
+  background(0)
 
-  stroke(0)
-  strokeWeight(1)
+  stroke(255)
+  strokeWeight(2)
   noFill()
 
    
@@ -121,6 +119,19 @@ function draw() {
 
   fft.analyze()
   amv = fft.getEnergy(20,200)
+  
+  push()
+  if(amv >= 220){
+    rotate(-0.5, 0.5)
+  }
+
+  image(img, width/2 ,height/2, width, height)
+  pop()
+
+
+  text("Nombre de la cancion: "+song_name, 10, 15);
+  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
+  textSize(20)
 
   var wave = fft.waveform();
 
@@ -178,7 +189,7 @@ function mouseReleased() {
 class Particle{
   constructor(){
     this.pos = p5.Vector.random2D().mult(250)
-    this.vel = createVector(0,0)
+    this.vel = createVector(width/2,height/2)
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
 
     this.w = random(3,5)
