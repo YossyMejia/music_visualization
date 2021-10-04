@@ -82,7 +82,9 @@ function drawSpeakers(level, color){
 }
 
 function circle(){
+  
 }
+
 
 
 function draw() {
@@ -96,7 +98,7 @@ function draw() {
   noFill()
 
   // Nueva funcionalidad
-  translate(width/2, height/2)
+  // translate(width/2, height/2)
 
   fft.analyze()
   amv = fft.getEnergy(20,200)
@@ -110,7 +112,7 @@ function draw() {
       var r = map(wave[index], -1, 1, 25, 200)
       var x = r * sin(i) * t
       var y = r * cos(i)
-      vertex(x, y)
+      vertex(x+width/2, y+height/2)
     }
     endShape()
   }
@@ -144,17 +146,17 @@ function draw() {
 
   
 
-  requestAnimationFrame(draw);
+  // requestAnimationFrame(draw);
 
-  if (running) {
-    update(dt);
-  }
+  // if (running) {
+  //   update(dt);
+  // }
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawLine(pointsUp);
-  drawLine(pointsDown);
-  connectPoints(pointsUp, pointsDown);
+  // drawLine(pointsUp);
+  // drawLine(pointsDown);
+  // connectPoints(pointsUp, pointsDown);
 
 }
 
