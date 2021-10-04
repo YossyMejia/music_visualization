@@ -23,7 +23,7 @@ function preload() {
   button.size(200,50);
   button.style("margin-top","50px");
   soundFormats('mp3', 'ogg'); 
-  mySound = loadSound("MusicDB/y2mate.com - RhapsodyEmerald Sword.mp3");
+  mySound = loadSound(path);
 }
 
 function setup() {
