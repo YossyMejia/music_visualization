@@ -3,6 +3,7 @@ let amp;
 let fft;
 let path = "MusicDB/Podington Bear - Starling";
 let song_name = "Podington Bear - Starling";
+var particles = []
 
 const fileSelector = document.getElementById('file_selector');
 
@@ -21,12 +22,13 @@ function preload() {
   button.size(200,50);
   button.style("margin-top","50px");
   soundFormats('mp3', 'ogg'); 
-  mySound = loadSound(path);
+  mySound = loadSound("MusicDB/y2mate.com - RhapsodyEmerald Sword.mp3");
 }
 
 function setup() {
   let cnv = createCanvas(windowWidth, windowHeight);
   cnv.mousePressed(canvasPressed);
+  angleMode(DEGREES)
   amp = new p5.Amplitude();
   fft = new p5.FFT();
 }
@@ -78,12 +80,56 @@ function drawSpeakers(level, color){
   circle(width/1.9, height/1.225, size/2.5, size);
 }
 
+function circle(){
+
+  translate(width/2, height/2)
+
+  fft.analyze()
+  amp = fft.getEnergy(20,200)
+
+  // Nueva funcionalidad
+  var wave = fft.waveform();
+
+  for(var t = -1; t <= 1; t+=2) {
+    beginShape()
+    for (var i = 0; i <= 180; i++){
+      var index = floor(map(i, 0, 180, 0, wave.length-1))
+      var r = map(wave[index], -1, 1, 25, 200)
+      var x = r * sin(i) * t
+      var y = r * cos(i)
+      vertex(x, y)
+    }
+    endShape()
+  }
+  var p = new Particle()
+  particles.push(p)
+
+  for (var i = particles.length - 1 ; i >=0; i--) {
+    if(!particles[i].edges()){
+      particles[i].update(amp > 100)
+      particles[i].show()
+    }else{
+      particles.splice(i, 1)
+    }
+  }
+
+  // Nueva funcionalidad
+
+}
+
 
 function draw() {
+
+  stroke(0)
+  strokeWeight(1)
+  noFill()
+
   background(800, 10)
-  text("Nombre de la cancion: "+song_name, 25, 25);
+  text("Nombre de la cancion: "+song_name, 10, 15);
   text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
   textSize(20)
+
+  circle();
   drawSubWoofersCase();
   drawSpeakerCase();
   drawSubWoofers(0.2, 80);
@@ -95,6 +141,18 @@ function draw() {
   else if(level <=  0.3){
     drawSpeakers(level/1.2, 125);
   }
+
+  requestAnimationFrame(draw);
+
+  if (running) {
+    update(dt);
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawLine(pointsUp);
+  drawLine(pointsDown);
+  connectPoints(pointsUp, pointsDown);
 
 }
 
@@ -108,4 +166,39 @@ function mouseReleased() {
   //Pause the song when the mouse leave the canvas
   mySound.pause();
   background(220);
+}
+
+class Particle{
+  constructor(){
+    this.pos = p5.Vector.random2D().mult(250)
+    this.vel = createVector(0,0)
+    this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
+
+    this.w = random(3,5)
+  }
+
+  update(cond){
+    this.vel.add(this.acc)
+    this.pos.add(this.vel)
+    if(cond){
+      this.pos.add(this.vel)
+      this.pos.add(this.vel)
+      this.pos.add(this.vel)
+    }
+  }
+
+  edges(){
+    if(this.pos.x < -width/1.2 || this.pos.x > width/1.2 || this.pos.y < -height/1.2 || this.pos.y > height/1.2){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  show() {
+    noStroke()
+    fill(0)
+    ellipse(this.pos.x/2, this.pos.y/2, this.w)
+  }
+
 }

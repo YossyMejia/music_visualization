@@ -7,3 +7,8 @@ canvas {
   display: block;
 }
 
+#can {
+  background-image: radial-gradient(circle, #F0C505, #F76E2A 10%, #A71A5B 40%, #651366);
+  position: relative;
+  overflow: hidden;
+}
