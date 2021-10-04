@@ -32,11 +32,11 @@ function setup() {
   let cnv = createCanvas(windowWidth, windowHeight);
   cnv.mousePressed(canvasPressed);
   angleMode(DEGREES)
-  // imageMode(CENTER)
+  imageMode(CENTER);
   amp = new p5.Amplitude();
-  fft = new p5.FFT();
+  fft = new p5.FFT(0.3);
 
-  img.filter(BLUR, 3)
+  img.filter(BLUR, 1)
 }
 
 function drawSubWoofersCase() {
@@ -90,12 +90,9 @@ function drawSpeakers(level, color){
 
 function draw() {
   background(0)
-  text("Nombre de la cancion: "+song_name, 10, 15);
-  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
-  textSize(20)
 
   stroke(255)
-  strokeWeight(3)
+  strokeWeight(2)
   noFill()
 
   // Nueva funcionalidad
@@ -109,10 +106,13 @@ function draw() {
     rotate(-0.5, 0.5)
   }
 
-  image(img, 0,0, width, height)
+  image(img, width/2 ,height/2, width, height)
   pop()
 
 
+  text("Nombre de la cancion: "+song_name, 10, 15);
+  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
+  textSize(20)
 
   var wave = fft.waveform();
 
