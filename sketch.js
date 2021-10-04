@@ -46,8 +46,8 @@ function setup() {
 function drawSubWoofersCase() {
   //Function to draw the subwoofers case
   fill(85,135,180)
-  rect(width/1.67,height/6.5,300,600)
-  rect(width/5.5,height/6.5,300,600)
+  rect(windowWidth/1.67,windowHeight/6.5,300,600)
+  rect(windowWidth/5.5,windowHeight/6.5,300,600)
 }
 
 function drawSpeakerCase() {
@@ -93,16 +93,22 @@ function drawSpeakers(level, color){
 
 
 function draw() {
+  
   background(0)
 
   stroke(255)
   strokeWeight(2)
   noFill()
 
-   
+  image(img, width/2 ,height/2, width, height)
+  pop()
 
-  drawSubWoofersCase();
-  drawSpeakerCase();
+  fill([255, 255, 255]);
+  text("Nombre de la cancion: "+song_name, 10, 50);
+  textSize(35)
+
+  //drawSubWoofersCase();
+  //drawSpeakerCase();
   drawSubWoofers(0.2, 80);
   drawSpeakers(0.2, 80);
 
@@ -124,14 +130,6 @@ function draw() {
   if(amv >= 220){
     rotate(-0.5, 0.5)
   }
-
-  image(img, width/2 ,height/2, width, height)
-  pop()
-
-
-  text("Nombre de la cancion: "+song_name, 10, 15);
-  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
-  textSize(20)
 
   var wave = fft.waveform();
 
