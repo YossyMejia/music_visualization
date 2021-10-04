@@ -1,5 +1,6 @@
 let mySound;
 let amp;
+let amv;
 let fft;
 let path = "MusicDB/Podington Bear - Starling";
 let song_name = "Podington Bear - Starling";
@@ -81,13 +82,25 @@ function drawSpeakers(level, color){
 }
 
 function circle(){
+}
 
+
+function draw() {
+  background(800, 10)
+  text("Nombre de la cancion: "+song_name, 10, 15);
+  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
+  textSize(20)
+
+  stroke(0)
+  strokeWeight(1)
+  noFill()
+
+  // Nueva funcionalidad
   translate(width/2, height/2)
 
   fft.analyze()
-  amp = fft.getEnergy(20,200)
+  amv = fft.getEnergy(20,200)
 
-  // Nueva funcionalidad
   var wave = fft.waveform();
 
   for(var t = -1; t <= 1; t+=2) {
@@ -106,7 +119,7 @@ function circle(){
 
   for (var i = particles.length - 1 ; i >=0; i--) {
     if(!particles[i].edges()){
-      particles[i].update(amp > 100)
+      particles[i].update(amv > 100)
       particles[i].show()
     }else{
       particles.splice(i, 1)
@@ -114,26 +127,13 @@ function circle(){
   }
 
   // Nueva funcionalidad
+  
 
-}
-
-
-function draw() {
-
-  stroke(0)
-  strokeWeight(1)
-  noFill()
-
-  background(800, 10)
-  text("Nombre de la cancion: "+song_name, 10, 15);
-  text('Mantener presionado el clic aqui para reproducir  -  Soltar clic para detener', 25, 55);
-  textSize(20)
-
-  circle();
   drawSubWoofersCase();
   drawSpeakerCase();
   drawSubWoofers(0.2, 80);
   drawSpeakers(0.2, 80);
+
   let level = amp.getLevel();
   if(level > 0.3){
     drawSubWoofers(level/2, 125);
@@ -141,6 +141,8 @@ function draw() {
   else if(level <=  0.3){
     drawSpeakers(level/1.2, 125);
   }
+
+  
 
   requestAnimationFrame(draw);
 
