@@ -62,15 +62,15 @@ function drawSubWoofers(level, color){
   fill(color,color,color)
   //Two principal subwoofers
   circle(width/4, height/4, size*2, size);
-  circle(width/1.5, height/4, size*2, size);
+  circle(width/1.45, height/4, size*2, size);
   //Two sub Subwoofers 
   circle(width/4, height/1.8, size, size);
-  circle(width/1.5, height/1.8, size, size);
+  circle(width/1.45, height/1.8, size, size);
   //Four inner circles
   circle(width/4, height/4, size, size);
-  circle(width/1.5, height/4, size, size);
+  circle(width/1.45, height/4, size, size);
   circle(width/4, height/1.8, size/2, size);
-  circle(width/1.5, height/1.8, size/2, size);
+  circle(width/1.45, height/1.8, size/2, size);
 }
 
 function drawSpeakers(level, color){
@@ -155,20 +155,6 @@ function draw() {
       particles.splice(i, 1)
     }
   }
-
-  // Nueva funcionalidad
- 
-  // requestAnimationFrame(draw);
-
-  // if (running) {
-  //   update(dt);
-  // }
-
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // drawLine(pointsUp);
-  // drawLine(pointsDown);
-  // connectPoints(pointsUp, pointsDown);
 
 }
 
